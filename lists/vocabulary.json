@@ -348,6 +348,25 @@
     { "term": "dm me", "weight": 5, "kind": "template", "source": "slopblock" },
     { "term": "what would you add", "weight": 8, "kind": "template", "source": "slopblock" },
     { "term": "save this post", "weight": 8, "kind": "template", "source": "slopblock" },
-    { "term": "tag someone", "weight": 6, "kind": "template", "source": "slopblock" }
+    { "term": "tag someone", "weight": 6, "kind": "template", "source": "slopblock" },
+    { "term": "real talk", "weight": 6, "kind": "phrase", "source": "slopblock" },
+    { "term": "worth a try", "weight": 4, "kind": "phrase", "source": "slopblock" },
+    { "term": "start small", "weight": 4, "kind": "phrase", "source": "slopblock" },
+    { "term": "take back control", "weight": 6, "kind": "phrase", "source": "slopblock" },
+    { "term": "a real difference", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "less hassle", "weight": 4, "kind": "phrase", "source": "slopblock" },
+    { "term": "without the hassle", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "seriously underrated", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "don't overcomplicate", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "once you get the hang of it", "weight": 4, "kind": "phrase", "source": "slopblock" },
+    { "term": "pro tip", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "super helpful", "weight": 3, "kind": "phrase", "source": "slopblock" },
+    { "term": "just had a", "weight": 6, "kind": "opener", "source": "slopblock" },
+    { "term": "give it a try", "weight": 5, "kind": "signoff", "source": "slopblock" },
+    { "term": "you won't regret it", "weight": 8, "kind": "signoff", "source": "slopblock" },
+    { "term": "your future self will thank you", "weight": 10, "kind": "signoff", "source": "slopblock" },
+    { "term": "worth a shot", "weight": 4, "kind": "signoff", "source": "slopblock" },
+    { "term": "start today", "weight": 6, "kind": "signoff", "source": "slopblock" },
+    { "term": "happy brewing", "weight": 8, "kind": "signoff", "source": "slopblock" }
   ]
 }

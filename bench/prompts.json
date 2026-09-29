@@ -1,0 +1,33 @@
+{
+  "genres": {
+    "hn_comment": "Write a comment for a Hacker News discussion thread about {topic}. Share an opinion or a personal experience. Output only the comment text.",
+    "linkedin_post": "Write a LinkedIn post about {topic}. Output only the post.",
+    "product_blurb": "Write a short launch blurb for a new product related to {topic}, the kind of text someone posts with a Show HN or puts on a landing page. Output only the blurb.",
+    "reddit_reply": "Write a Reddit reply to someone asking for advice about {topic}. Output only the reply."
+  },
+  "styles": {
+    "default": " Keep it under 200 words.",
+    "plain": " Write it the way a real person would type it: plain text, no markdown, no headings, no bullet points, no emoji, no hashtags. Keep it under 150 words."
+  },
+  "models": ["qwen3:4b", "qwen3:1.7b"],
+  "options": {
+    "temperature": 0.8,
+    "top_p": 0.95
+  },
+  "seedBase": 1000,
+  "modelSettings": {
+    "qwen3:4b": {
+      "mode": "raw",
+      "num_predict": 600,
+      "thinkPrefill": "I will write the requested text directly now."
+    },
+    "qwen3:1.7b": {
+      "mode": "chat",
+      "think": false,
+      "num_predict": 600
+    }
+  },
+  "notes": "qwen3:1.7b is the hybrid Qwen3 model and runs through /api/chat with think:false, which makes its template insert an empty think block. qwen3:4b resolves to Qwen3-4B-Thinking-2507 in Ollama. That model ignores think:false and writes its reasoning into the answer, and it also reasons past an empty think block. So it runs through /api/generate in raw mode with rawTemplate: the same chat format with a one-line closed think block, which is the closest equivalent of think:false. Only the first topicLimit topics are used for generation to keep the run short on a shared machine. All topics are used for the human set.",
+  "rawTemplate": "<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n<think>\n{thinkPrefill}\n</think>\n\n",
+  "topicLimit": 20
+}

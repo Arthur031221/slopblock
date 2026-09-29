@@ -1,0 +1,146 @@
+[
+  {
+    "id": "remote-work",
+    "topic": "remote work",
+    "hnQuery": "remote work",
+    "subreddits": ["remotework", "cscareerquestions"]
+  },
+  {
+    "id": "learning-rust",
+    "topic": "learning Rust",
+    "hnQuery": "learning rust",
+    "subreddits": ["rust", "learnprogramming"]
+  },
+  {
+    "id": "home-server",
+    "topic": "self-hosting a home server",
+    "hnQuery": "self hosting home server",
+    "subreddits": ["selfhosted", "homelab"]
+  },
+  {
+    "id": "password-managers",
+    "topic": "password managers",
+    "hnQuery": "password manager",
+    "subreddits": ["privacy", "Bitwarden"]
+  },
+  {
+    "id": "sqlite-production",
+    "topic": "SQLite in production",
+    "hnQuery": "sqlite production",
+    "subreddits": ["programming", "webdev"]
+  },
+  {
+    "id": "kubernetes-small-teams",
+    "topic": "Kubernetes for small teams",
+    "hnQuery": "kubernetes small team",
+    "subreddits": ["kubernetes", "devops"]
+  },
+  {
+    "id": "mechanical-keyboards",
+    "topic": "mechanical keyboards",
+    "hnQuery": "mechanical keyboard",
+    "subreddits": ["MechanicalKeyboards"]
+  },
+  {
+    "id": "tech-burnout",
+    "topic": "burnout in tech jobs",
+    "hnQuery": "burnout",
+    "subreddits": ["cscareerquestions", "ExperiencedDevs"]
+  },
+  {
+    "id": "electric-cars",
+    "topic": "electric cars",
+    "hnQuery": "electric car",
+    "subreddits": ["electricvehicles", "teslamotors"]
+  },
+  {
+    "id": "ebike-commuting",
+    "topic": "e-bikes for commuting",
+    "hnQuery": "ebike commute",
+    "subreddits": ["ebikes", "bikecommuting"]
+  },
+  {
+    "id": "linux-desktop",
+    "topic": "Linux on the desktop",
+    "hnQuery": "linux desktop",
+    "subreddits": ["linux", "linux4noobs"]
+  },
+  {
+    "id": "oss-funding",
+    "topic": "funding open source maintainers",
+    "hnQuery": "open source maintainer funding",
+    "subreddits": ["opensource", "programming"]
+  },
+  {
+    "id": "startup-fundraising",
+    "topic": "startup fundraising",
+    "hnQuery": "fundraising seed round",
+    "subreddits": ["startups", "Entrepreneur"]
+  },
+  {
+    "id": "index-funds",
+    "topic": "index fund investing",
+    "hnQuery": "index funds",
+    "subreddits": ["personalfinance", "Bogleheads"]
+  },
+  {
+    "id": "home-cooking",
+    "topic": "learning to cook at home",
+    "hnQuery": "learning to cook",
+    "subreddits": ["Cooking", "EatCheapAndHealthy"]
+  },
+  {
+    "id": "first-marathon",
+    "topic": "training for a first marathon",
+    "hnQuery": "marathon training",
+    "subreddits": ["running", "firstmarathon"]
+  },
+  {
+    "id": "standing-desks",
+    "topic": "standing desks and back pain",
+    "hnQuery": "standing desk",
+    "subreddits": ["backpain", "StandingDesk"]
+  },
+  {
+    "id": "email-newsletters",
+    "topic": "email newsletters",
+    "hnQuery": "newsletter",
+    "subreddits": ["Newsletters", "Entrepreneur"]
+  },
+  {
+    "id": "static-site-generators",
+    "topic": "static site generators",
+    "hnQuery": "static site generator",
+    "subreddits": ["webdev", "Hugo"]
+  },
+  {
+    "id": "code-review",
+    "topic": "code review culture",
+    "hnQuery": "code review",
+    "subreddits": ["ExperiencedDevs", "programming"]
+  },
+  {
+    "id": "technical-interviews",
+    "topic": "technical interviews",
+    "hnQuery": "technical interview",
+    "subreddits": ["cscareerquestions", "leetcode"]
+  },
+  {
+    "id": "moving-city",
+    "topic": "moving to a new city",
+    "hnQuery": "moving to a new city",
+    "subreddits": ["relocating", "AskReddit"]
+  },
+  {
+    "id": "home-coffee",
+    "topic": "brewing coffee at home",
+    "hnQuery": "coffee brewing",
+    "subreddits": ["Coffee", "pourover"]
+  },
+  {
+    "id": "ad-tracking",
+    "topic": "online privacy and ad tracking",
+    "hnQuery": "ad tracking privacy",
+    "subreddits": ["privacy", "degoogle"]
+  }
+]

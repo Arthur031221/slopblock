@@ -11,8 +11,11 @@ import { vocabularySignals } from "./vocabulary.ts";
  */
 export const DEFAULT_THRESHOLD = 50;
 
-/** Raw points that map to a score of about 63. The curve flattens above that. */
-const SCALE = 55;
+/**
+ * Raw points that map to a score of about 63. Set so that the dev-half operating point lands
+ * on a score of 50. The curve flattens above that.
+ */
+export const SCALE = 34;
 
 export interface ScoreOptions {
   kind?: ItemKind;

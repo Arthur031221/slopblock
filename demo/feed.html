@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- Demo fixture for screenshots. Uses the class names the LinkedIn adapter reads. People,
+     companies and posts are made up. demo/capture.mjs serves it at a linkedin.com URL inside
+     a sandboxed browser with all network access blocked. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Feed (demo)</title>
+<style>
+  body { margin: 0; background: #f4f2ee; font: 14px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1d1d1d; }
+  .top { background: #fff; border-bottom: 1px solid #e0dfdc; height: 52px; display: flex; align-items: center; padding: 0 24px; gap: 12px; }
+  .top b { font-size: 17px; }
+  .top input { width: 260px; background: #edf3f8; border: 0; border-radius: 4px; padding: 7px 10px; font: inherit; }
+  .top .muted { margin-left: auto; }
+  .wrap { max-width: 600px; margin: 20px auto; }
+  .card { background: #fff; border: 1px solid #e0dfdc; border-radius: 8px; margin-bottom: 10px; padding: 12px 16px 4px; }
+  .update-components-actor { display: grid; grid-template-columns: 48px 1fr; column-gap: 8px; margin-bottom: 8px; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; grid-row: span 3; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; }
+  .update-components-actor__title { font-weight: 600; }
+  .update-components-actor__description, .muted, .update-components-actor__sub-description { color: #666; font-size: 12px; }
+  .update-components-text { white-space: normal; }
+  .update-components-image { margin: 10px -16px 0; height: 140px; display: flex; align-items: flex-end; justify-content: flex-end; padding: 8px; }
+  .update-components-image button { border: 1px solid #999; background: #fff; border-radius: 3px; font-size: 10px; padding: 1px 4px; }
+  .actions { display: flex; justify-content: space-around; border-top: 1px solid #e8e8e8; margin-top: 10px; padding: 6px 0; color: #555; font-weight: 600; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="top"><b>Feed</b><input placeholder="Search" aria-label="Search"><span class="muted">demo page, all names are made up</span></div>
+<div class="wrap">
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:1">
+  <div class="update-components-actor"><div class="avatar" style="background:#0a66c2">PR</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Priya Raman</span></span>
+    <span class="update-components-actor__description">Staff Engineer, freight logistics &middot; 2h</span></div>
+  <div class="update-components-text">We moved our job queue from Redis to Postgres last quarter. Throughput dropped about 15 percent, which we expected, and on-call pages for the queue went from roughly one a week to zero since March. The main reason is boring: one less thing to back up and restore. Write-up with the two mistakes we made with advisory locks is in the comments.</div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:2">
+  <div class="update-components-actor"><div class="avatar" style="background:#8a5a44">JB</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Jordan Blake</span></span>
+    <span class="update-components-actor__description">Helping leaders unlock their potential &middot; 5h</span></div>
+  <div class="update-components-text">I'm thrilled to share a lesson that changed how I lead. 🚀<br><br>Leadership isn't about titles. It's about trust.<br><br>In today's fast-paced world, the best leaders foster curiosity, empower their teams, and navigate the complexities of change with empathy.<br><br>✅ Listen more than you speak<br>✅ Celebrate small wins<br>✅ Lead with vulnerability<br><br>The result? Teams that thrive.<br><br>Agree? What would you add? 👇<br><br>♻️ Repost to help someone in your network.<br><br>#leadership #growthmindset #teamwork</div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:3">
+  <div class="update-components-actor"><div class="avatar" style="background:#2f7d4f">MO</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Marta Oliveira</span></span>
+    <span class="update-components-actor__description">Engineering Manager &middot; 7h</span></div>
+  <div class="update-components-text">We're hiring two backend engineers in Lisbon, Go and Postgres, hybrid two days a week. Salary band is in the ad, 62 to 78k. I read every application myself and reply within a week, including the no.</div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:4">
+  <div class="update-components-actor"><div class="avatar" style="background:#6b4fbb">AK</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Alex Kim</span></span>
+    <span class="update-components-actor__description">AI Strategist &middot; Keynote Speaker &middot; 1d</span></div>
+  <div class="update-components-text">AI won't replace you. Someone using AI will. 🤖<br><br>Here's the thing: in this ever-evolving landscape, adaptability isn't just a skill — it's a superpower.<br><br>🔑 Embrace lifelong learning<br>💡 Leverage the right tools<br>🚀 Stay ahead of the curve<br><br>The future belongs to those who harness its transformative potential.<br><br>What's your experience? Let me know in the comments!<br><br>#AI #FutureOfWork #Innovation #Leadership</div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:5">
+  <div class="update-components-actor"><div class="avatar" style="background:#b8860b">SF</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Studio Fern</span></span>
+    <span class="update-components-actor__sub-description"><span aria-hidden="true">AI-generated</span></span></div>
+  <div class="update-components-text">Our autumn collection is here. Twelve pieces, made in Porto.</div>
+  <div class="update-components-image" style="background:linear-gradient(135deg,#d9a066,#8a5a44)"><button aria-label="Content Credentials: view media origin information">CR</button></div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+<div class="card feed-shared-update-v2" data-urn="urn:li:activity:6">
+  <div class="update-components-actor"><div class="avatar" style="background:#c0392b">TN</div>
+    <span class="update-components-actor__title"><span aria-hidden="true">Tomasz Nowak</span></span>
+    <span class="update-components-actor__description">SRE &middot; 1d</span></div>
+  <div class="update-components-text">Postmortem from Tuesday is public. Short version: a certificate on an internal load balancer expired at 03:12 UTC, the renewal job had been failing silently since July because of a moved secret, and our alert only checked public endpoints. We now alert on every cert under 21 days.</div>
+  <div class="actions"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>
+
+</div>
+</body>
+</html>

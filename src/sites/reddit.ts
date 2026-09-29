@@ -15,7 +15,7 @@ function newReddit(root: ParentNode): FoundItem[] {
       text: bodyText ? `${title}\n\n${bodyText}` : title,
       kind: bodyText ? "post" : "title",
       author: post.getAttribute("author") ?? undefined,
-      blur: [titleEl, body].filter((e): e is Element => e !== null),
+      blur: [body, titleEl].filter((e): e is Element => e !== null),
       mount: anchor.parentElement,
       before: anchor,
       hints: body ? findHints(body, "reddit") : [],
@@ -63,8 +63,7 @@ function oldReddit(root: ParentNode): FoundItem[] {
     const title = entry.querySelector("a.title");
     if (!title?.parentElement) continue;
     const body = md ? extractText(md) : "";
-    const blur: Element[] = [title];
-    if (md) blur.push(md);
+    const blur: Element[] = md ? [md, title] : [title];
     items.push({
       el: thing,
       text: body ? `${textOf(title)}\n\n${body}` : textOf(title),

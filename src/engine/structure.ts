@@ -13,7 +13,7 @@ export function emDashSignal(doc: Doc): Reason | null {
   if (count === 0 || doc.wordCount === 0) return null;
   const per100 = (count / doc.wordCount) * 100;
   if (per100 < 0.25) return null;
-  const points = Math.min(22, 5 + 5 * count * lengthNorm(doc.wordCount));
+  const points = Math.min(26, 10 + 4 * count * lengthNorm(doc.wordCount));
   return reason(
     "em-dash",
     count === 1 ? "Em dash" : `Em dashes x${count}`,
@@ -29,7 +29,7 @@ const NEGATIVE_PARALLELS: { re: RegExp; points: number }[] = [
   // it's not X, it's Y / this is not X. It is Y
   {
     re: new RegExp(`\\b${SUBJ}${BE} not\\b[^.!?\\n]{1,80}?${SEP}\\s*${SUBJ}${BE}\\b`, "gi"),
-    points: 9,
+    points: 11,
   },
   // this isn't X. It's Y
   {
@@ -37,12 +37,12 @@ const NEGATIVE_PARALLELS: { re: RegExp; points: number }[] = [
       `\\b${SUBJ} (?:isn't|aren't|wasn't|weren't)\\b[^.!?\\n]{1,80}?${SEP}\\s*${SUBJ}${BE}\\b`,
       "gi",
     ),
-    points: 9,
+    points: 11,
   },
   // X isn't about Y. It's about Z
   {
     re: /\b(?:isn't|is not|aren't|are not|wasn't|was not) (?:just |only |really )?about\b[^.!?\n]{1,80}?(?:[,;:.!—–]|\s-\s)\s*(?:it's|it is|they're|this is|that's) (?:all )?about\b/gi,
-    points: 9,
+    points: 11,
   },
   // not just X, but Y / not only X but also Y
   { re: /\bnot (?:just|only|merely|simply)\b[^.!?\n]{1,80}?\bbut(?: also)?\b/gi, points: 6 },
@@ -67,7 +67,7 @@ export function negativeParallelSignal(doc: Doc): Reason | null {
   return reason(
     "not-x-but-y",
     count === 1 ? `"Not X, it's Y"` : `"Not X, it's Y" x${count}`,
-    Math.min(26, points),
+    Math.min(28, points),
     `Negative parallelism ("it's not X, it's Y", "not just X but Y") found ${count} time${count === 1 ? "" : "s"}.`,
   );
 }
@@ -139,7 +139,7 @@ export function formattingSignals(doc: Doc, kind: ItemKind): Reason[] {
       reason(
         "bullets",
         `Bullet list x${bullets}`,
-        Math.min(14, 6 + 10 * ratio) * scale,
+        Math.min(10, 4 + 6 * ratio) * scale,
         `${bullets} of ${doc.lines.length} lines are list items.`,
       ),
     );
@@ -210,7 +210,7 @@ export function broetrySignal(doc: Doc): Reason | null {
   return reason(
     "one-liners",
     "One-line paragraphs",
-    8,
+    6,
     `${single} of ${doc.paragraphs.length} paragraphs are a single short sentence.`,
   );
 }
@@ -225,7 +225,7 @@ export function rhetoricalSignal(doc: Doc): Reason | null {
   return reason(
     "rhetorical",
     `Self-answered question${count > 1 ? ` x${count}` : ""}`,
-    Math.min(14, 7 * count),
+    Math.min(18, 10 * count),
     `"The result? ..." style questions answered in the next breath, ${count} found.`,
   );
 }

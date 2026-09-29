@@ -3,6 +3,8 @@ import type { FoundItem } from "../sites/types.ts";
 
 export const STATE_ATTR = "data-slopblock";
 export const BLUR_ATTR = "data-slopblock-blur";
+/** Set on the main text block of a blurred item so long posts fold to a few lines. */
+export const FOLD_ATTR = "data-slopblock-fold";
 export const STRIP_TAG = "slopblock-strip";
 
 const STRIP_CSS = `
@@ -122,6 +124,11 @@ export class Blur {
     }
     this.item.el.setAttribute(STATE_ATTR, this.revealed ? "revealed" : "blurred");
     for (const el of this.item.blur) el.setAttribute(BLUR_ATTR, this.revealed ? "off" : "on");
+    const main = this.item.blur[0];
+    if (main && this.item.kind !== "title") {
+      if (this.revealed) main.removeAttribute(FOLD_ATTR);
+      else main.setAttribute(FOLD_ATTR, "");
+    }
   }
 
   get isRevealed(): boolean {
@@ -144,6 +151,7 @@ export class Blur {
     this.item.el.removeAttribute(STATE_ATTR);
     for (const el of this.item.blur) {
       el.removeAttribute(BLUR_ATTR);
+      el.removeAttribute(FOLD_ATTR);
       el.removeEventListener("click", this.onClick, true);
     }
   }

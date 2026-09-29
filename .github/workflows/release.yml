@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - name: Check the tag matches package.json
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${version}" >&2
+            exit 1
+          fi
+      - name: Attach the Chrome and Firefox zips to a GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          notes="$(awk "/^## ${version}/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md)"
+          gh release create "${GITHUB_REF_NAME}" \
+            "dist/slopblock-chrome-${version}.zip" \
+            "dist/slopblock-firefox-${version}.zip" \
+            --title "slopblock ${version}" \
+            --notes "${notes}"

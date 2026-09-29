@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { BLUR_ATTR, STATE_ATTR, STRIP_TAG } from "../../src/content/blur.ts";
+import { BLUR_ATTR, FOLD_ATTR, STATE_ATTR, STRIP_TAG } from "../../src/content/blur.ts";
 import { Scanner } from "../../src/content/scanner.ts";
 import { DEFAULT_SETTINGS, type Settings } from "../../src/shared/settings.ts";
 import { hackernews, reddit } from "../../src/sites/index.ts";
@@ -53,9 +53,11 @@ describe("Scanner", () => {
     scanner.scan();
     const post = doc.querySelectorAll("shreddit-post")[1] as Element;
     const body = post.querySelector('[slot="text-body"]:not(slopblock-strip)') as HTMLElement;
+    expect(body.hasAttribute(FOLD_ATTR)).toBe(true);
     body.click();
     expect(post.getAttribute(STATE_ATTR)).toBe("revealed");
     expect(body.getAttribute(BLUR_ATTR)).toBe("off");
+    expect(body.hasAttribute(FOLD_ATTR)).toBe(false);
     const button = post
       .querySelector(STRIP_TAG)
       ?.shadowRoot?.querySelector("button") as HTMLButtonElement;
@@ -105,7 +107,7 @@ describe("Scanner", () => {
   });
 
   it("follows the threshold", () => {
-    const { scanner } = redditScanner({ threshold: 95 });
+    const { scanner } = redditScanner({ threshold: 100 });
     expect(scanner.scan()).toBe(0);
     scanner.update(settings({ threshold: 10 }));
     expect(scanner.state().hidden).toBeGreaterThanOrEqual(2);

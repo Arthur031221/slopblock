@@ -8,7 +8,7 @@ export interface FoundItem {
   text: string;
   kind: ItemKind;
   author?: string;
-  /** Elements that get blurred. */
+  /** Elements that get blurred. The first one is the main text and folds to a few lines. */
   blur: Element[];
   /** Parent element that receives the reason strip. */
   mount: Element;

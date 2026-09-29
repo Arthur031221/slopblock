@@ -9,6 +9,14 @@
     opacity 120ms ease 60ms;
 }
 
+/* Fold long blurred text to a few lines so a hidden post does not take a screen of feed. */
+[data-slopblock-fold] {
+  max-height: 6.5em !important;
+  overflow: hidden !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent) !important;
+  mask-image: linear-gradient(to bottom, #000 55%, transparent) !important;
+}
+
 html[data-slopblock-preview="on"] [data-slopblock-blur="on"]:hover {
   filter: blur(1.5px);
   opacity: 1;
