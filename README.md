@@ -23,9 +23,9 @@ The existing tools either send your feed to a paid API, remove posts without tel
 
 ## Install
 
-**Chrome, Edge, Brave and other Chromium browsers.** Download `slopblock-chrome-0.1.0.zip` from [Releases](https://github.com/Arthur031221/slopblock/releases), unzip it, open `chrome://extensions`, turn on Developer mode, click **Load unpacked** and pick the unzipped folder.
+**Chrome, Edge, Brave and other Chromium browsers.** Download [`slopblock-chrome-0.1.0.zip`](https://github.com/Arthur031221/slopblock/releases/download/v0.1.0/slopblock-chrome-0.1.0.zip), unzip it, open `chrome://extensions`, turn on Developer mode, click **Load unpacked** and pick the unzipped folder.
 
-**Firefox 142 or later.** Download `slopblock-firefox-0.1.0.zip` from Releases, open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on** and pick the zip. Temporary add-ons are removed when Firefox restarts. A signed build on addons.mozilla.org is planned, see [Publishing](#publishing).
+**Firefox 142 or later.** Download [`slopblock-firefox-0.1.0.zip`](https://github.com/Arthur031221/slopblock/releases/download/v0.1.0/slopblock-firefox-0.1.0.zip), open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on** and pick the zip. Temporary add-ons are removed when Firefox restarts. A signed build on addons.mozilla.org is planned, see [Publishing](#publishing).
 
 **From source** (Node 22.18 or later):
 
