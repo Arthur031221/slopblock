@@ -367,6 +367,20 @@
     { "term": "your future self will thank you", "weight": 10, "kind": "signoff", "source": "slopblock" },
     { "term": "worth a shot", "weight": 4, "kind": "signoff", "source": "slopblock" },
     { "term": "start today", "weight": 6, "kind": "signoff", "source": "slopblock" },
-    { "term": "happy brewing", "weight": 8, "kind": "signoff", "source": "slopblock" }
+    { "term": "happy brewing", "weight": 8, "kind": "signoff", "source": "slopblock" },
+    { "term": "has never been easier", "weight": 8, "kind": "phrase", "source": "slopblock" },
+    { "term": "a powerful alternative", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "is a powerful", "weight": 3, "kind": "phrase", "source": "slopblock" },
+    { "term": "a great choice", "weight": 3, "kind": "phrase", "source": "slopblock" },
+    { "term": "both beginners and", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "beginners and experts", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "it offers", "weight": 3, "kind": "phrase", "source": "slopblock" },
+    { "term": "a fantastic way to", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "valuable resource", "weight": 5, "kind": "phrase", "source": "slopblock" },
+    { "term": "user-friendly", "weight": 3, "kind": "phrase", "source": "slopblock" },
+    { "term": "sleek", "weight": 3, "kind": "word", "source": "slopblock" },
+    { "term": "i understand what you're", "weight": 8, "kind": "opener", "source": "slopblock" },
+    { "term": "i recommend starting with", "weight": 5, "kind": "opener", "source": "slopblock" },
+    { "term": "i totally understand", "weight": 8, "kind": "opener", "source": "slopblock" }
   ]
 }

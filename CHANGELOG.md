@@ -4,7 +4,7 @@
 
 First release.
 
-- Scoring engine with an editable word and phrase list (321 entries from three attributed sources) and structural signals: em dash density, "it's not X, it's Y" constructions, rule of three, emoji bullets, Markdown formatting, sentence length uniformity, hedging, sign-offs, hashtag blocks, one-line paragraphs and self-answered questions.
+- Scoring engine with an editable word and phrase list (354 entries from three attributed sources) and structural signals: em dash density, "it's not X, it's Y" constructions, rule of three, emoji bullets, Markdown formatting, sentence length uniformity, hedging, sign-offs, hashtag blocks, one-line paragraphs and self-answered questions.
 - Site signals: YouTube "Altered or synthetic content" labels, LinkedIn AI-generated markers and Content Credentials, chatbot link tags such as `utm_source=chatgpt.com`, and engagement template posts.
 - Site adapters for Hacker News, X, LinkedIn, Reddit (new and old), YouTube, and an article mode for any other page.
 - Blur with a reason strip (score and top three reasons), click to reveal, hover to preview.

@@ -31,6 +31,8 @@ async function main(): Promise<void> {
     doc: document,
     settings,
     list: listFor(settings),
+    // Article mode walks every paragraph on the page, so it rescans less often.
+    debounceMs: adapter.id === "generic" ? 1500 : 300,
     onHidden: (added, pageTotal) => {
       ext.runtime
         .sendMessage({ type: "hidden", site: adapter.id, added, pageTotal })

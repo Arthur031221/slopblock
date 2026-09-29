@@ -67,8 +67,12 @@ function cleanHtml(html) {
   return normalize(unescapeHtml(text));
 }
 
+// Email addresses in public job threads belong to third parties. Keep them out of the set.
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
+
 function normalize(text) {
   return text
+    .replace(EMAIL, "[email]")
     .replace(/\r\n?/g, "\n")
     .split(/\n{2,}/)
     .map((p) =>

@@ -61,6 +61,11 @@ const setSettings = (patch) =>
   }, patch);
 
 const page = await context.newPage();
+const errors = [];
+page.on("pageerror", (e) => errors.push(`page: ${e.message}`));
+page.on("console", (m) => {
+  if (m.type() === "error" || m.text().startsWith("slopblock")) errors.push(`console: ${m.text()}`);
+});
 const frames = [];
 const shot = async (name, hold) => {
   const path = join(OUT, `${name}.png`);
@@ -106,6 +111,9 @@ await options.fill(
 await options.waitForTimeout(300);
 await options.screenshot({ path: join(OUT, "options.png") });
 console.log("wrote demo/options.png");
+
+if (errors.length > 0) console.warn(`errors while capturing:\n${errors.join("\n")}`);
+else console.log("no page or extension errors");
 
 await context.close();
 rmSync(profile, { recursive: true, force: true });

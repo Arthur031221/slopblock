@@ -38,15 +38,15 @@ A bare array of entries also imports. `kind` defaults to `word`, `source` is opt
 
 ## Weights
 
-Points add up into a raw score, which maps to 0 to 100 as `100 * (1 - exp(-raw / 55))`. Rough guide:
+Points add up into a raw score, which maps to 0 to 100 as `100 * (1 - exp(-raw / 34))`. Rough guide:
 
 | Raw points | Score |
 |---|---|
-| 10 | 17 |
-| 25 | 37 |
-| 38 | 50 |
-| 55 | 63 |
-| 90 | 81 |
+| 10 | 25 |
+| 20 | 44 |
+| 24 | 51 |
+| 35 | 64 |
+| 60 | 83 |
 
 Texts under 50 words are damped: their text points are multiplied by `(words + 10) / 60`. Platform labels and chatbot leftovers are not damped.
 
