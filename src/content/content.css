@@ -1,4 +1,5 @@
-/* Injected into every page. Only touches elements slopblock marked. */
+/* Injected into every page. Only touches elements slopblock marked. The !important flags are
+   needed to win over site styles. */
 [data-slopblock-blur="on"] {
   filter: blur(6px);
   opacity: 0.8;

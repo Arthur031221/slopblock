@@ -29,5 +29,27 @@
     "formatter": {
       "lineWidth": 160
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["src/content/content.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["demo/feed.html"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    }
+  ]
 }
