@@ -1,9 +1,9 @@
 // Scores the labeled benchmark with the heuristic engine and writes bench/results.md and
-// bench/results.json. Usage: node bench/run.ts [--classifier scores.jsonl] [--check]
+// bench/results.json. Usage: node bench/run.ts [--check] [--signals] [--dump]
 //
 // The set is split in two by a hash of each id. Weights and the default threshold were tuned
 // on the dev half only. The headline numbers come from the test half.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { compileList } from "../src/engine/lists.ts";
 import { DEFAULT_THRESHOLD, scoreText } from "../src/engine/score.ts";
@@ -28,7 +28,6 @@ interface Scored extends Sample {
   split: "dev" | "test";
   score: number;
   reasons: string[];
-  classifier?: number;
 }
 
 function readJsonl(path: string): Sample[] {
@@ -125,15 +124,20 @@ const list = compileList(
 const human = readJsonl(join(ROOT, "bench/data/human.jsonl"));
 const machine = readJsonl(join(ROOT, "bench/data/machine.jsonl"));
 
-const classifierPath = args.includes("--classifier")
-  ? args[args.indexOf("--classifier") + 1]
-  : undefined;
-const classifier = new Map<string, number>();
-if (classifierPath) {
-  for (const line of readFileSync(classifierPath, "utf8").split("\n")) {
-    if (!line.trim()) continue;
-    const r = JSON.parse(line) as { id: string; p_machine: number };
-    classifier.set(r.id, r.p_machine);
+// Classifier scores from bench/classifier-scores.mjs, one file per model.
+const CLASSIFIER_DIR = join(ROOT, "bench/data/classifier");
+const classifiers = new Map<string, Map<string, number>>();
+if (existsSync(CLASSIFIER_DIR)) {
+  for (const f of readdirSync(CLASSIFIER_DIR)
+    .filter((x) => x.endsWith(".jsonl"))
+    .sort()) {
+    const scores = new Map<string, number>();
+    for (const line of readFileSync(join(CLASSIFIER_DIR, f), "utf8").split("\n")) {
+      if (!line.trim()) continue;
+      const r = JSON.parse(line) as { id: string; p_machine: number };
+      scores.set(r.id, r.p_machine);
+    }
+    classifiers.set(f.replace(/\.jsonl$/, "").replace("__", "/"), scores);
   }
 }
 
@@ -146,8 +150,6 @@ const scored: Scored[] = [...human, ...machine].map((s) => {
     score: r.score,
     reasons: r.reasons.map((x) => x.id),
   };
-  const c = classifier.get(s.id);
-  if (c !== undefined) row.classifier = c;
   return row;
 });
 const msPerText = (performance.now() - t0) / scored.length;
@@ -217,24 +219,66 @@ const falsePositives = test
   .sort((a, b) => b.score - a.score);
 const misses = test.filter((s) => s.label === "machine" && s.score < DEFAULT_THRESHOLD);
 
-// Optional classifier comparison.
+// Classifier comparison. For each model: the classifier alone at 0.5, and the heuristic score
+// plus w times the classifier probability, with w and the threshold chosen on the dev half so
+// that the dev false positive rate stays at or below the heuristics' dev rate at the default.
 let classifierSection = "";
-if (classifier.size > 0) {
-  const withC = test.filter((s) => s.classifier !== undefined);
-  const cRows = withC.map((r) => ({ label: r.label, value: (r.classifier ?? 0) * 100 }));
-  const hRows = withC.map((r) => ({ label: r.label, value: r.score }));
-  const cBest = Array.from({ length: 19 }, (_, i) => 5 + i * 5)
-    .map((t) => metrics(cRows, t))
-    .sort((a, b) => b.f1 - a.f1)[0];
+const combos: {
+  model: string;
+  w: number;
+  t: number;
+  test: Metrics;
+  alone: Metrics;
+  aucC: number;
+}[] = [];
+for (const [model, scores] of classifiers) {
+  const withC = (rows: Scored[]) =>
+    rows.map((r) => ({ label: r.label, h: r.score, c: scores.get(r.id) ?? 0 }));
+  const d = withC(dev);
+  const t = withC(test);
+  let best: { w: number; t: number; m: Metrics } | undefined;
+  for (const w of [0, 10, 20, 30, 40, 60, 80, 120]) {
+    for (let th = 20; th <= 200; th += 2) {
+      const m = metrics(
+        d.map((x) => ({ label: x.label, value: x.h + w * x.c })),
+        th,
+      );
+      if (m.fpr <= atDefault.dev.fpr && (!best || m.recall > best.m.recall)) best = { w, t: th, m };
+    }
+  }
+  if (!best) continue;
+  const b = best;
+  combos.push({
+    model,
+    w: b.w,
+    t: b.t,
+    test: metrics(
+      t.map((x) => ({ label: x.label, value: x.h + b.w * x.c })),
+      b.t,
+    ),
+    alone: metrics(
+      t.map((x) => ({ label: x.label, value: x.c * 100 })),
+      50,
+    ),
+    aucC: auc(t.map((x) => ({ label: x.label, value: x.c }))),
+  });
+}
+if (combos.length > 0) {
+  const h = atDefault.test;
   classifierSection = [
-    "## Classifier comparison",
+    "## Optional classifier",
     "",
-    `Scores from \`${classifierPath}\` on the ${withC.length} test texts that have one.`,
+    "Small ONNX text classifiers that run in transformers.js, scored with `bench/classifier-scores.mjs` (q8 weights, CPU). Test half only.",
     "",
-    "| | ROC AUC | F1 at 0.5 | Best F1 (threshold) |",
+    "| Model | Classifier AUC | Classifier alone at 0.5: precision, recall, FPR | Heuristics plus w x p (w, threshold from dev): precision, recall, FPR |",
     "|---|---|---|---|",
-    `| Heuristics | ${f2(auc(hRows))} | ${f2(metrics(hRows, DEFAULT_THRESHOLD).f1)} (at ${DEFAULT_THRESHOLD}) | ${f2(Math.max(...Array.from({ length: 17 }, (_, i) => metrics(hRows, 10 + i * 5).f1)))} |`,
-    `| Classifier | ${f2(auc(cRows))} | ${f2(metrics(cRows, 50).f1)} | ${f2(cBest?.f1 ?? 0)} (${((cBest?.threshold ?? 0) / 100).toFixed(2)}) |`,
+    `| heuristics only, threshold ${DEFAULT_THRESHOLD} | | | ${pct(h.precision)}, ${pct(h.recall)}, ${pct(h.fpr)} |`,
+    ...combos.map(
+      (c) =>
+        `| ${c.model} | ${f2(c.aucC)} | ${pct(c.alone.precision)}, ${pct(c.alone.recall)}, ${pct(c.alone.fpr)} | ${pct(c.test.precision)}, ${pct(c.test.recall)}, ${pct(c.test.fpr)} (w ${c.w}, threshold ${c.t}) |`,
+    ),
+    "",
+    "On its own no classifier matches the heuristics at a comparable false positive rate. Added to the heuristic score, each one raises recall at about the same false positive rate. None ships in 0.1.0, see the README for why.",
     "",
   ].join("\n");
 }
@@ -371,7 +415,7 @@ if (args.includes("--check")) {
   writeFileSync(join(ROOT, "bench/results.md"), out);
   writeFileSync(
     join(ROOT, "bench/results.json"),
-    `${JSON.stringify({ threshold: DEFAULT_THRESHOLD, atDefault, curve, n: { human: human.length, machine: machine.length } }, null, 2)}\n`,
+    `${JSON.stringify({ threshold: DEFAULT_THRESHOLD, atDefault, curve, combos, n: { human: human.length, machine: machine.length } }, null, 2)}\n`,
   );
 }
 

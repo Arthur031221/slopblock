@@ -11,4 +11,4 @@ First release.
 - Popup with daily and total counters, sensitivity slider, per-site toggles and pause per site. Options page with an editable list, JSON import and export, author and domain allowlists, and a "Try it" box.
 - Keyboard shortcut Alt+Shift+S to turn it on or off.
 - Chrome and Firefox builds from one code base, zipped by `npm run build`.
-- Benchmark in `bench/` with the method, prompts and results.
+- Benchmark in `bench/` with the method, prompts and results, including three small ONNX classifiers for comparison. None is bundled, see the README.

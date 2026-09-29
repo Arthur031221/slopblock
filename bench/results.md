@@ -89,6 +89,18 @@ None at the default threshold.
 
 Machine texts missed in the test half: 34. Most are from the plain style prompt, which asks for no Markdown, no lists and no emoji.
 
+## Optional classifier
+
+Small ONNX text classifiers that run in transformers.js, scored with `bench/classifier-scores.mjs` (q8 weights, CPU). Test half only.
+
+| Model | Classifier AUC | Classifier alone at 0.5: precision, recall, FPR | Heuristics plus w x p (w, threshold from dev): precision, recall, FPR |
+|---|---|---|---|
+| heuristics only, threshold 50 | | | 100.0%, 57.0%, 0.0% |
+| onnx-community/e5-small-lora-ai-generated-detector-ONNX | 0.85 | 47.2%, 94.9%, 67.7% | 100.0%, 63.3%, 0.0% (w 60, threshold 92) |
+| trentmkelly/slop-detector-mini-2 | 0.93 | 88.5%, 58.2%, 4.8% | 98.2%, 70.9%, 0.8% (w 30, threshold 50) |
+| trentmkelly/slop-detector-mini | 0.87 | 68.9%, 53.2%, 15.3% | 100.0%, 67.1%, 0.0% (w 30, threshold 50) |
+
+On its own no classifier matches the heuristics at a comparable false positive rate. Added to the heuristic score, each one raises recall at about the same false positive rate. None ships in 0.1.0, see the README for why.
 
 ## Method
 

@@ -22,7 +22,8 @@ function hitPoints(hit: Hit): number {
 }
 
 function shown(hit: Hit): string {
-  return hit.seen ?? hit.entry.term;
+  // Terms like "overall," carry a comma so they only match as a lead-in. Drop it for display.
+  return (hit.seen ?? hit.entry.term).replace(/,$/, "");
 }
 
 function sortedTerms(hits: Hit[]): string[] {
