@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>slopblock</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>slopblock</h1>
+      <label class="switch" title="Turn slopblock on or off everywhere">
+        <input type="checkbox" id="enabled" />
+        <span>On</span>
+      </label>
+    </header>
+
+    <section class="stats" aria-live="polite">
+      <p id="today-line">Hidden today: <strong id="today">0</strong></p>
+      <p class="muted">This page: <span id="page">-</span> &middot; All time: <span id="total">0</span></p>
+    </section>
+
+    <section>
+      <label for="threshold" class="row">
+        <span>Blur at score</span>
+        <output id="threshold-value" for="threshold">50</output>
+      </label>
+      <input type="range" id="threshold" min="10" max="95" step="5" />
+      <div class="scale muted"><span>More blur</span><span>Fewer misfires</span></div>
+    </section>
+
+    <section>
+      <h2>Sites</h2>
+      <div id="sites"></div>
+    </section>
+
+    <section class="actions">
+      <button type="button" id="pause-site">Pause on this site</button>
+      <button type="button" id="open-options">Lists and allowlist</button>
+    </section>
+
+    <footer class="muted">
+      <span id="shortcut">Alt+Shift+S</span> toggles. Nothing leaves your browser.
+    </footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

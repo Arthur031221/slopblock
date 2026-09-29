@@ -19,10 +19,15 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "assist": {
     "enabled": true
+  },
+  "json": {
+    "formatter": {
+      "lineWidth": 160
+    }
   }
 }

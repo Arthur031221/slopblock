@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>slopblock options</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>slopblock</h1>
+        <p class="muted">Everything on this page is stored in your browser only. Nothing is sent anywhere.</p>
+      </header>
+
+      <section>
+        <h2>Try it</h2>
+        <p class="muted">Paste any text to see its score and the reasons, using your current list.</p>
+        <textarea id="try-text" rows="6" placeholder="Paste a post, comment or article here"></textarea>
+        <div id="try-result" class="result" aria-live="polite"></div>
+      </section>
+
+      <section>
+        <h2>Allowlist</h2>
+        <div class="grid">
+          <label>
+            <span>Authors never blurred, one per line (handle or display name)</span>
+            <textarea id="allow-authors" rows="6" spellcheck="false"></textarea>
+          </label>
+          <label>
+            <span>Domains where slopblock stays off, one per line</span>
+            <textarea id="allow-domains" rows="6" spellcheck="false"></textarea>
+          </label>
+        </div>
+        <label class="inline"><input type="checkbox" id="hover-preview" /> Unblur slightly while the pointer rests on an item</label>
+        <div class="buttons"><button type="button" id="save-allow">Save allowlist</button><span id="allow-status" class="status"></span></div>
+      </section>
+
+      <section>
+        <h2>Word and phrase list</h2>
+        <p class="muted">
+          Weights are points added when a term appears. Kinds: <b>word</b> and <b>phrase</b> count anywhere,
+          <b>opener</b> only at the start, <b>signoff</b> only in the last paragraph, <b>hedge</b> by density,
+          <b>template</b> when two or more appear. A trailing <code>*</code> matches any ending, so <code>delv*</code>
+          matches delve, delves and delving.
+        </p>
+        <form id="add-form" class="add">
+          <input id="add-term" placeholder="term or phrase" required maxlength="120" />
+          <input id="add-weight" type="number" min="0.5" max="100" step="0.5" value="5" required />
+          <select id="add-kind"></select>
+          <button type="submit">Add</button>
+        </form>
+        <div class="toolbar">
+          <input id="filter" type="search" placeholder="Filter terms" />
+          <span id="list-status" class="status"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Term</th><th>Kind</th><th>Weight</th><th>Source</th><th></th></tr></thead>
+            <tbody id="entries"></tbody>
+          </table>
+        </div>
+        <div class="buttons">
+          <button type="button" id="save-list" class="primary">Save list</button>
+          <button type="button" id="export">Export JSON</button>
+          <label class="button">Import JSON<input type="file" id="import" accept="application/json,.json" hidden /></label>
+          <button type="button" id="reset">Reset to default list</button>
+        </div>
+        <details>
+          <summary>Where the default list comes from</summary>
+          <ul id="sources"></ul>
+        </details>
+      </section>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>
