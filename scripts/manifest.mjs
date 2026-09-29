@@ -71,7 +71,7 @@ export function manifest(target, version) {
       browser_specific_settings: {
         gecko: {
           id: "slopblock@arthur031221.github.io",
-          strict_min_version: "140.0",
+          strict_min_version: "142.0",
           data_collection_permissions: { required: ["none"] },
         },
       },
