@@ -74,7 +74,7 @@ export function extractText(root: Element): string {
     const heading = HEADING.test(tag);
     const block = heading || BLOCK.has(tag);
     const bold = tag === "STRONG" || tag === "B";
-    if (block) parts.push("\n");
+    if (block) parts.push(tag === "P" ? "\n\n" : "\n");
     if (heading) parts.push("\n# ");
     if (tag === "LI") parts.push("- ");
     if (bold) parts.push("**");

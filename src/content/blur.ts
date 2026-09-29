@@ -53,10 +53,12 @@ export class Blur {
     this.reveal();
   };
 
-  constructor(
-    readonly item: FoundItem,
-    readonly result: ScoreResult,
-  ) {
+  readonly item: FoundItem;
+  readonly result: ScoreResult;
+
+  constructor(item: FoundItem, result: ScoreResult) {
+    this.item = item;
+    this.result = result;
     const doc = item.el.ownerDocument;
     this.strip = doc.createElement(STRIP_TAG);
     const slot = item.before?.getAttribute("slot");

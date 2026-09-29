@@ -19,10 +19,14 @@ export const x: SiteAdapter = {
   find(root) {
     const items: FoundItem[] = [];
     for (const tweet of Array.from(root.querySelectorAll('article[data-testid="tweet"]'))) {
-      const text = tweet.querySelector('[data-testid="tweetText"]');
+      // A tweet nested in another tweet is a quote card. It is scored with its outer tweet.
+      if (tweet.parentElement?.closest('article[data-testid="tweet"]')) continue;
+      // The tweet's own text, not the text inside a quoted tweet card (a role="link" block).
+      const text = Array.from(tweet.querySelectorAll('[data-testid="tweetText"]')).find((t) => {
+        const card = t.closest('[role="link"]');
+        return !card || !tweet.contains(card) || card === tweet;
+      });
       if (!text?.parentElement) continue;
-      // Skip the quoted tweet's text: it belongs to the outer tweet's quote card.
-      if (text.closest('article[data-testid="tweet"]') !== tweet) continue;
       const media = Array.from(tweet.querySelectorAll(MEDIA)).filter(
         (m) => m.closest('article[data-testid="tweet"]') === tweet,
       );

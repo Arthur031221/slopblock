@@ -60,7 +60,11 @@ export class Scanner {
   private observer: MutationObserver | null = null;
   private timer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private opts: ScannerOptions) {}
+  private opts: ScannerOptions;
+
+  constructor(opts: ScannerOptions) {
+    this.opts = opts;
+  }
 
   get hiddenOnPage(): number {
     return this.counted.size;

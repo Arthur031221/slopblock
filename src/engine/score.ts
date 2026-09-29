@@ -41,7 +41,7 @@ export function scoreText(text: string, list: CompiledList, opts: ScoreOptions =
   }
   const damp = lengthDamping(doc.wordCount, kind);
   const textReasons = [...vocabularySignals(doc, list), ...structureSignals(doc, kind)].map(
-    (r): Reason => ({ ...r, points: round1(r.points * damp) }),
+    (r): Reason => (r.id === "leftover" ? r : { ...r, points: round1(r.points * damp) }),
   );
   const reasons = [...site, ...textReasons]
     .filter((r) => r.points > 0)

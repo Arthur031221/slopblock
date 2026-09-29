@@ -66,12 +66,19 @@ export function wordHits(doc: Doc, list: CompiledList): Hit[] {
   return [...counts].map(([entry, count]) => ({ entry, count, seen: seen.get(entry) }));
 }
 
-/** The last paragraph, or the last 240 characters when the text is one block. */
+/**
+ * Where sign-offs live: the last paragraph when it is short, otherwise the last sentence, or
+ * the last two sentences for texts of four sentences or more.
+ */
 function tail(doc: Doc): string {
   const last = doc.paragraphs[doc.paragraphs.length - 1] ?? "";
   if (doc.paragraphs.length > 1 && last.length <= 320) return last.toLowerCase();
-  return doc.lower.slice(-240);
+  const n = doc.sentences.length >= 4 ? 2 : 1;
+  return doc.sentences.slice(-n).join(" ").toLowerCase().slice(-320);
 }
+
+/** Phrases at or above this weight are chatbot leftovers ("as an AI language model"). */
+export const LEFTOVER_WEIGHT = 40;
 
 export function vocabularySignals(doc: Doc, list: CompiledList): Reason[] {
   const reasons: Reason[] = [];
@@ -89,7 +96,19 @@ export function vocabularySignals(doc: Doc, list: CompiledList): Reason[] {
     });
   }
 
-  const phrases = patternHits(doc.lower, list.phrases);
+  const allPhrases = patternHits(doc.lower, list.phrases);
+  const leftovers = allPhrases.filter((h) => h.entry.weight >= LEFTOVER_WEIGHT);
+  const phrases = allPhrases.filter((h) => h.entry.weight < LEFTOVER_WEIGHT);
+  if (leftovers.length > 0) {
+    // Not length-normalized and not damped: one of these settles it.
+    reasons.push({
+      id: "leftover",
+      category: "vocabulary",
+      label: `Chatbot leftover: ${quoteTerms(sortedTerms(leftovers), 1)}`,
+      points: leftovers.reduce((s, h) => s + h.entry.weight, 0),
+      detail: `Text a chatbot writes about itself or leaves behind: ${detailOf(leftovers)}.`,
+    });
+  }
   if (phrases.length > 0) {
     const points = phrases.reduce((s, h) => s + hitPoints(h), 0) * norm;
     reasons.push({

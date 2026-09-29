@@ -72,7 +72,10 @@ if (watch) {
     const outdir = join("dist", target);
     await mkdir(outdir, { recursive: true });
     await copyStatic(outdir);
-    await writeFile(join(outdir, "manifest.json"), `${JSON.stringify(manifest(target, pkg.version), null, 2)}\n`);
+    await writeFile(
+      join(outdir, "manifest.json"),
+      `${JSON.stringify(manifest(target, pkg.version), null, 2)}\n`,
+    );
     const ctx = await esbuild.context(options(target, outdir));
     await ctx.watch();
   }

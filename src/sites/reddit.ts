@@ -4,9 +4,9 @@ import type { FoundItem, SiteAdapter } from "./types.ts";
 function newReddit(root: ParentNode): FoundItem[] {
   const items: FoundItem[] = [];
   for (const post of Array.from(root.querySelectorAll("shreddit-post"))) {
-    const titleEl = post.querySelector('[slot="title"]');
+    const titleEl = post.querySelector('[slot="title"]:not(slopblock-strip)');
     const title = post.getAttribute("post-title") ?? textOf(titleEl);
-    const body = post.querySelector('[slot="text-body"]');
+    const body = post.querySelector('[slot="text-body"]:not(slopblock-strip)');
     const anchor = body ?? titleEl;
     if (!anchor?.parentElement) continue;
     const bodyText = body ? extractText(body) : "";
@@ -22,7 +22,7 @@ function newReddit(root: ParentNode): FoundItem[] {
     });
   }
   for (const comment of Array.from(root.querySelectorAll("shreddit-comment"))) {
-    const body = comment.querySelector(':scope > [slot="comment"]');
+    const body = comment.querySelector(':scope > [slot="comment"]:not(slopblock-strip)');
     if (!body?.parentElement) continue;
     items.push({
       el: comment,
