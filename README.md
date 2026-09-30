@@ -151,6 +151,12 @@ slopblock makes no network requests. It has no analytics, no telemetry, no remot
 
 To submit the Firefox build to addons.mozilla.org: run `npm run build`, sign in at the [Add-on Developer Hub](https://addons.mozilla.org/developers/), choose **Submit a New Add-on**, upload `dist/slopblock-firefox-0.1.0.zip`, and because the code is bundled, upload a source zip of the repository with these build steps. The manifest already declares a gecko id and `data_collection_permissions: none`. `npx web-ext lint --source-dir dist/firefox` reports no errors or warnings.
 
+## Related projects
+
+- [lenslocal](https://github.com/Arthur031221/lenslocal): Another on-device browser tool, camera translation instead of feed filtering, same no-network approach.
+- [agentleaks](https://github.com/Arthur031221/agentleaks): Keeps your own AI-assisted work private the same way slopblock keeps your feed reading private, nothing leaves the machine.
+- [installwall](https://github.com/Arthur031221/installwall): A different kind of on-device guard, checked before a package install instead of before a post renders.
+
 ## Contributing
 
 Issues and pull requests are welcome, especially new site adapters, list entries with before and after benchmark numbers, and saved pages where slopblock gets it wrong. See [CONTRIBUTING.md](CONTRIBUTING.md).
